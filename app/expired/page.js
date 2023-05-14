@@ -1,4 +1,4 @@
-import { StudentCard } from "@/components/Student";
+import { StudentCard } from "@/app/Components/Student";
 
 export default async function Expired() {
   // const res = await fetch(`${process.env.PUBLIC_URL}/data.json`);
