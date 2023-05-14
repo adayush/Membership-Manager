@@ -1,6 +1,7 @@
-import Image from "next/image";
 import "./globals.css";
 import { Inter } from "next/font/google";
+
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,28 +21,5 @@ export default function RootLayout({ children }) {
         {children}
       </body>
     </html>
-  );
-}
-
-function Header() {
-  return (
-    <header className="bg-black text-white">
-      <div className="py-4 px-8 flex justify-between">
-        <div className="flex items-center">
-          <Image
-            src="/space21-logo.png"
-            width={40}
-            height={40}
-            alt="Space21 Logo"
-          />
-          <h1 className="ml-4 text-lg">
-            <strong>Space21</strong> Management
-          </h1>
-        </div>
-        <div className="flex items-center">
-          <button>Search Btn</button>
-        </div>
-      </div>
-    </header>
   );
 }
