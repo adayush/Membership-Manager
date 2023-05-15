@@ -5,8 +5,6 @@ export default async function Expired() {
   const res = await fetch(`${process.env.PUBLIC_URL}/api/expired`);
   const data = await res.json();
 
-  console.log(data)
-
   if (res.status === 200 && data.length !== 0)
     return (
       <main className="p-6 md:p-20 flex flex-col">
