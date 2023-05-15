@@ -4,6 +4,7 @@ import data from "@/public/data.json"
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const receipt = searchParams.get('receipt');
+
   // const res = await fetch('https://data.mongodb-api.com/...', {
   //   headers: {
   //     'Content-Type': 'application/json',
