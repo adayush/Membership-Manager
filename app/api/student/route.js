@@ -1,25 +1,21 @@
-import { NextResponse } from 'next/server';
-import data from "@/public/data.json"
- 
+import { NextResponse } from "next/server";
+import supabase from "@/utils/supabase";
+// import data from "@/public/data.json"
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const receipt = searchParams.get('receipt');
+  const receipt = searchParams.get("receipt");
 
-  // const res = await fetch('https://data.mongodb-api.com/...', {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'API-Key': process.env.DATA_API_KEY,
-  //   },
-  // });
-  // const data = await res.json();
+  const data = await supabase
+    .from("Receipts")
+    .select()
+    .eq("Receipt Number", receipt);
 
-  const student = data.find(item => item["Receipt Number"] === parseInt(receipt))
-
-  if (student) {
-    delete student["Key"]
-    return NextResponse.json( student );
+  if (data.error) {
+    return NextResponse.json({}, { status: 404 });
   } else {
-    return NextResponse.json([], { status: 404 })
+    delete data.data[0]["Key"];
+    return NextResponse.json(data.data[0]);
   }
 }
 
@@ -31,6 +27,6 @@ export async function GET(request) {
 //     },
 //   });
 //   const data = await res.json();
- 
+
 //   return NextResponse.json({ data });
 // }

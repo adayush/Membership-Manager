@@ -5,7 +5,7 @@ export default async function Expired() {
   const res = await fetch(`${process.env.PUBLIC_URL}/api/expired`);
   const data = await res.json();
 
-  console.log(res.status)
+  console.log(data)
 
   if (res.status === 200 && data.length !== 0)
     return (
@@ -13,7 +13,7 @@ export default async function Expired() {
         <p className="text-right text-gray-500">{data.length} students</p>
         <div className="w-full grid md:grid-cols-2 gap-4">
           {data?.map((student) => (
-            <StudentCard key={student["Key"]} student={student} />
+            <StudentCard key={student["receipt_number"]} student={student} />
           ))}
         </div>
       </main>
