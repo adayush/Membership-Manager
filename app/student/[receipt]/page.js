@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default async function Student({ params }) {
   const res = await fetch(`${process.env.PUBLIC_URL}/api/student?receipt=${params.receipt}`);
   const data = await res.json()
@@ -31,6 +33,11 @@ export default async function Student({ params }) {
             <p className="text-gray-800 text-xl">{data["created"]}</p>
           </div>
         </div>
+        <Link href={`${process.env.PUBLIC_URL}/student/edit/${data["receipt_number"]}`}>
+          <div className="absolute right-8 bottom-8 p-5 [clip-path:circle()] [shape-outside:circle()] bg-black text-white rounded-full">
+            📝
+          </div>
+        </Link>
       </main>
     );
   else

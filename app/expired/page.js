@@ -9,7 +9,7 @@ export default async function Expired() {
     return (
       <main className="p-6 md:p-20 flex flex-col">
         <p className="text-right text-gray-500">{data.length} students</p>
-        <div className="w-full grid md:grid-cols-2 gap-4">
+        <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4">
           {data?.map((student) => (
             <StudentCard key={student["receipt_number"]} student={student} />
           ))}

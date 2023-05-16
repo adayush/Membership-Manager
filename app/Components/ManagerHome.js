@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function ManagerHome() {
   const greetings = ["Namaste", "Hello", "Hey", "Hi"];
   return (
-    <main className="p-12 md:p-24 flex flex-col text-lg justify-around">
+    <main className="p-12 pb-20 md:p-24 flex flex-col text-lg justify-around">
       <div className="flex flex-col gap-20">
         <div>
           <h1 className="text-3xl mb-2 text-center font-medium">
