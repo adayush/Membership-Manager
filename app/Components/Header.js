@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="bg-black text-white">
-      <div className="py-4 px-8">
+      <div className="p-4 max-w-xl m-auto">
         <div className="flex justify-between">
           <Link href="/">
             <div className="flex items-center">
@@ -14,7 +14,7 @@ export default function Header() {
                 height={40}
                 alt="Space21 Logo"
               />
-              <h1 className="ml-4 text-xl">
+              <h1 className="ml-4 text-lg sm:text-xl">
                 <span className="font-medium">Space21</span> Management
               </h1>
             </div>

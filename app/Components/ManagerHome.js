@@ -29,7 +29,7 @@ export default function ManagerHome() {
               <h2>Recently Expired</h2>
             </div>
           </Link>
-          <Link href="/"  className="bg-yellow-200">
+          <Link href="/student/new"  className="bg-yellow-200">
             <div>
               <h2>+ Add new student</h2>
             </div>

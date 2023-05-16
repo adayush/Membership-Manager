@@ -2,7 +2,7 @@ import { StudentCard } from "@/app/Components/Student";
 
 export default async function Expired() {
   // const res = await fetch(`${process.env.PUBLIC_URL}/data.json`);
-  const res = await fetch(`${process.env.PUBLIC_URL}/api/expired`);
+  const res = await fetch(`${process.env.PUBLIC_URL}/api/expired`, { next: { revalidate: 60 }});
   const data = await res.json();
 
   if (res.status === 200 && data.length !== 0)
