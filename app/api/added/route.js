@@ -3,20 +3,18 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const today = new Date().toISOString().split('T')[0].replaceAll('-', '/');
-  let week = new Date();
-  week.setDate(week.getDate() + 7)
-  week = week.toISOString().split('T')[0].replaceAll('-', '/')
 
-  console.log(today, week)
+  console.log(today)
 
   const data = await supabase
     .from("Receipts")
     .select(
       "receipt_number, branch, name, phone_number, expiry_date, created"
     )
-    // .eq('branch', 'Talwandi')
-    .gte('expiry_date', today)
-    .lt('expiry_date', week);
+    .eq('branch', 'Talwandi')
+    .lt('created', today)
+    .order('created', {ascending: false})
+    .limit(10)
 
   if (data.error === 'null') {
     return NextResponse.json({}, { status: 404 });

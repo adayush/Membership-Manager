@@ -14,7 +14,6 @@ export function StudentCard({ student }) {
         <div>
           <div className="w-full flex justify-end gap-2">
             <button>📞</button>
-            <button>📝</button>
           </div>
         </div>
       </div>

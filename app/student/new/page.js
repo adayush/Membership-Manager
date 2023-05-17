@@ -2,7 +2,6 @@
 import { useState } from "react";
 
 export default function NewStudent() {
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     receipt_number: null,
     branch: null,
@@ -18,7 +17,16 @@ export default function NewStudent() {
     });
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    console.log(formData);
+    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student/new`, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(res => res.json())
+      .then(json => console.log(json));
+  };
 
   return (
     <main className="p-6 sm:p-24">
@@ -31,6 +39,7 @@ export default function NewStudent() {
           <input
             type="number"
             autoComplete="off"
+            required
             onChange={(e) => handleChange(e, "receipt_number")}
           />
         </div>
@@ -39,6 +48,7 @@ export default function NewStudent() {
           <select
             type="select"
             onChange={(e) => handleChange(e, "branch")}
+            required
             className="p-2 border-[1px] border-gray-300 rounded-sm bg-gray-100 w-full"
           >
             <option selected disabled>
@@ -54,6 +64,7 @@ export default function NewStudent() {
           <input
             type="text"
             autoComplete="off"
+            required
             onChange={(e) => handleChange(e, "name")}
           />
         </div>
@@ -64,6 +75,7 @@ export default function NewStudent() {
             autoComplete="off"
             min={999999999}
             max={9999999999}
+            required
             onChange={(e) => handleChange(e, "phone_number")}
           />
         </div>
@@ -72,6 +84,7 @@ export default function NewStudent() {
           <input
             type="date"
             autoComplete="off"
+            required
             onChange={(e) => handleChange(e, "expiry_date")}
           />
         </div>
