@@ -19,8 +19,7 @@ export default function Header() {
               </h1>
             </div>
           </Link>
-          <div className="flex items-center bg-gray-300 rounded-full w-[40px]">
-            .
+          <div className="w-[40px] [clip-path:circle()] [shape-outside:circle()] bg-gray-300 rounded-full">
           </div>
         </div>
       </div>

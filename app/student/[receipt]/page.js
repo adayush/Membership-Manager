@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function Student({ params }) {
@@ -35,7 +36,7 @@ export default async function Student({ params }) {
         </div>
         <Link href={`${process.env.NEXT_PUBLIC_PUBLIC_URL}/student/edit/${data["receipt_number"]}`}>
           <div className="absolute right-8 bottom-8 p-5 [clip-path:circle()] [shape-outside:circle()] bg-black text-white rounded-full">
-            📝
+            <Image src="/images/editsmall.png" width={24} height={24} alt="Edit button" />
           </div>
         </Link>
       </main>

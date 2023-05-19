@@ -7,6 +7,7 @@ const handler = NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       profile(profile) {
+        console.log(profile)
         return {
           // Return all the profile information you need.
           // The only truly required field is `id`
@@ -15,9 +16,9 @@ const handler = NextAuth({
       },
     })
   ],
-  pages: {
-    signIn: '/signIn'
-  }
+  // pages: {
+  //   signIn: '/signIn'
+  // }
 })
 
 export { handler as GET, handler as POST }

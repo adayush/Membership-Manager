@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 export default function NewStudent() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [formStatus, setFormStatus] = useState();
   const [formData, setFormData] = useState({
     receipt_number: null,
     branch: null,
@@ -9,6 +12,58 @@ export default function NewStudent() {
     phone_number: null,
     expiry_date: null,
   });
+  const [errors, setErrors] = useState({
+    receipt_number: null,
+    branch: null,
+    name: null,
+    phone_number: null,
+    expiry_date: null
+  })
+
+  const validate = () => {
+    const newErrors = {
+      receipt_number: null,
+      branch: null,
+      name: null,
+      phone_number: null,
+      expiry_date: null
+    }
+
+    if (!formData.receipt_number) {
+      newErrors["receipt_number"] = 'Please input a receipt number.'
+    } else if (formData.receipt_number <= 0) {
+      newErrors["receipt_number"] = 'Receipt number cannot be less than 1.'
+    }
+    if (!formData.branch) {
+      newErrors["branch"] = 'Please select a branch.'
+    }
+    if (!formData.name) {
+      newErrors["name"] = 'Please input student name.'
+    } else if (formData.name.length < 3) {
+      newErrors["name"] = 'Name is too short.'
+    }
+    if (!formData.phone_number) {
+      newErrors["phone_number"] = 'Please input phone number.'
+    } else if (formData.phone_number < 1000000000 || formData.phone_number > 9999999999) {
+      newErrors["phone_number"] = 'Phone number must have 10 digits, please check'
+    }
+    if (!formData.expiry_date) {
+      newErrors["expiry_date"] = 'Please input membershp expiry date.'
+    }
+
+    let isValid = true
+
+    for (const key in newErrors) {
+      if (newErrors[key]) {
+        isValid = false;
+        break;
+      }
+    }
+    setErrors(newErrors)
+    return isValid;
+  }
+
+  const router = useRouter();
 
   const handleChange = (event, property) => {
     setFormData({
@@ -18,14 +73,27 @@ export default function NewStudent() {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
+    if (!validate()) return;
+
+    setIsLoading(true);
+
     fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student/new`, {
       method: "POST",
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" },
     })
-      .then(res => res.json())
-      .then(json => console.log(json));
+      .then(res => {
+        console.log(res.status, res.ok, res.statusText);
+        if (res.status === 201) {
+          // redirect to Home
+          setFormStatus("Success");
+          setTimeout(() => router.push('/'), 1000);
+        } else {
+          // failed to add student
+          setFormData("Failed");
+        }
+      });
+     setIsLoading(false);
   };
 
   return (
@@ -34,6 +102,7 @@ export default function NewStudent() {
         <h1 className="text-xl sm:text-2xl font-medium mb-2 text-center">
           New Student
         </h1>
+        <FormStatus formStatus={formStatus} />
         <div>
           <label>Receipt Number</label>
           <input
@@ -42,6 +111,7 @@ export default function NewStudent() {
             required
             onChange={(e) => handleChange(e, "receipt_number")}
           />
+          <span className="text-red-500">{errors["receipt_number"]}</span>
         </div>
         <div>
           <label>Branch</label>
@@ -58,6 +128,7 @@ export default function NewStudent() {
             <option value="Talwandi">Talwandi</option>
             <option value="Dadabari">Dadabari</option>
           </select>
+          <span className="text-red-500">{errors["branch"]}</span>
         </div>
         <div>
           <label>Name</label>
@@ -67,6 +138,7 @@ export default function NewStudent() {
             required
             onChange={(e) => handleChange(e, "name")}
           />
+          <span className="text-red-500">{errors["name"]}</span>
         </div>
         <div>
           <label>Phone Number</label>
@@ -78,6 +150,7 @@ export default function NewStudent() {
             required
             onChange={(e) => handleChange(e, "phone_number")}
           />
+          <span className="text-red-500">{errors["phone_number"]}</span>
         </div>
         <div>
           <label>Membership Expiry Date</label>
@@ -85,16 +158,38 @@ export default function NewStudent() {
             type="date"
             autoComplete="off"
             required
+            min={new Date().toISOString().split("T")[0]}
             onChange={(e) => handleChange(e, "expiry_date")}
           />
+          <span className="text-red-500">{errors["expiry_date"]}</span>
         </div>
         <button
-          className="w-full text-center text-white text-lg rounded bg-black p-3 mt-8 hover:bg-blue-500"
+          className="w-full text-center text-white text-lg rounded bg-black p-3 mt-8 hover:bg-[#fbd331] hover:text-black hover:font-semibold"
           onClick={handleSubmit}
+          disabled={isLoading}
         >
-          Submit
+          {isLoading? 'Please wait' : 'Submit'}
         </button>
       </div>
     </main>
   );
+}
+
+
+function FormStatus({ formStatus }) {
+  if (!formStatus) return;
+
+  else if (formStatus === "Success") {
+    return (
+      <div className="border-2 border-red-200 p-2 rounded-md text-red-500">
+        <p>✅ Student added. Redirecting to home...</p>
+      </div>
+    )
+  } else {
+    return (
+      <div className="border-2 border-red-200 p-2 rounded-md text-red-500">
+        <p>! Failed creating student.</p>
+      </div>
+    );
+  }
 }
