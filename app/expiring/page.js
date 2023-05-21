@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/api/auth/[...nextauth]/route";
-import StudentCard from "@/components/StudentCard";
+import StudentCard from "components/StudentCard";
 
 export default async function Expired() {
   const session = await getServerSession(authOptions);
