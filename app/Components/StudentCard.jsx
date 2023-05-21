@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function StudentCard({ student }) {
+export default function StudentCard({ student }) {
   return (
     <Link href={`/student/${student["receipt_number"]}`}>
       <div className="flex flex-col border rounded-md p-3 hover:bg-gray-100 [&>div]:my-1 [&>div]:flex [&>div]:justify-between [&>div]:items-end">
