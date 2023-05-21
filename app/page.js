@@ -1,7 +1,7 @@
-import ManagerHome from "@/app/components/ManagerHome";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { authOptions } from "@/api/auth/[...nextauth]/route";
+import ManagerHome from "@/components/ManagerHome";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

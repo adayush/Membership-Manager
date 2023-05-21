@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Greeting from "@/app/components/Greeting";
+import Greeting from "@/components/Greeting";
 import Image from "next/image";
 
 export default function ManagerHome() {
