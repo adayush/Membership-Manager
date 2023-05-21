@@ -1,8 +1,8 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 
-import Header from "@/app/Components/Header";
-import Provider from "./Components/Provider";
+import Header from "@/app/components/Header";
+import Provider from "./components/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +18,8 @@ export default function RootLayout({ children }) {
         <title>Space21 Management</title>
       </head>
       <body className={inter.className}>
-        <Header />
         <Provider>
+          <Header />
           {children}
         </Provider>
       </body>

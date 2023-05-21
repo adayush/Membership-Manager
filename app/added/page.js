@@ -1,7 +1,11 @@
-import { StudentCard } from "@/app/Components/Student";
+import { StudentCard } from "@/app/components/Student";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export default async function Added() {
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/data.json`);
+  const session = await getServerSession(authOptions);
+  if (!session) redirect('/login');
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/added`, { next: { revalidate: 60 }});
   const data = await res.json();
 

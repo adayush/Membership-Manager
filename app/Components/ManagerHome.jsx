@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Greeting from "@/app/Components/Greeting";
+import Greeting from "@/app/components/Greeting";
 import Image from "next/image";
 
 export default function ManagerHome() {
@@ -17,17 +17,22 @@ export default function ManagerHome() {
               <Image src="/images/search.png" width={30} height={30} alt="Search button" />
             </button>
           </div>
-          <Link href="/added">
+          <Link href="/added" prefetch={false}>
             <div>
               <h2>Recently Added</h2>
             </div>
           </Link>
-          <Link href="/expired">
+          <Link href="/expired" prefetch={false}>
             <div>
               <h2>Recently Expired</h2>
             </div>
           </Link>
-          <Link href="/student/new"  className="bg-yellow-200">
+          <Link href="/expiring" prefetch={false}>
+            <div>
+              <h2>Expiring soon</h2>
+            </div>
+          </Link>
+          <Link href="/student/new" prefetch={false} className="bg-yellow-200">
             <div>
               <h2>➕ Add new student</h2>
             </div>

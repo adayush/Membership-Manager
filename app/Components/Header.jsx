@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Avatar from "./Avatar";
 
-export default function Header() {
+export default async function Header() {
+  const session = await getServerSession(authOptions);
+
   return (
     <header className="bg-black text-white">
       <div className="p-4 max-w-xl m-auto">
@@ -9,7 +14,7 @@ export default function Header() {
           <Link href="/">
             <div className="flex items-center">
               <Image
-                src="/space21-logo.png"
+                src="/images/space21-logo.png"
                 width={40}
                 height={40}
                 alt="Space21 Logo"
@@ -19,10 +24,10 @@ export default function Header() {
               </h1>
             </div>
           </Link>
-          <div className="w-[40px] [clip-path:circle()] [shape-outside:circle()] bg-gray-300 rounded-full">
-          </div>
+          {session && <Avatar name={session.user.name} image={session.user.image} />}
         </div>
       </div>
     </header>
   );
 }
+

@@ -6,14 +6,14 @@ export default async function Expired() {
   const session = await getServerSession(authOptions);
   if (!session) redirect('/login');
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/expired`, { next: { revalidate: 60 }});
+  const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/expiring`, { next: { revalidate: 60 }});
   const data = await res.json();
 
   if (res.status === 200 && data.length !== 0)
     return (
       <main className="p-6 md:p-20">
         <h1 className="text-xl sm:text-2xl font-medium mb-8 text-center">
-          Expired in last 7 days
+          Expiring in 7 days
         </h1>
         <div className="max-w-2xl m-auto">
           <p className="text-right text-gray-500">{data.length} students</p>

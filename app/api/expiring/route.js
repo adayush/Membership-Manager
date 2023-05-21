@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const today = new Date().toISOString().split('T')[0].replaceAll('-', '/');
   let week = new Date();
-  week.setDate(week.getDate() - 7)
+  week.setDate(week.getDate() + 7)
   week = week.toISOString().split('T')[0].replaceAll('-', '/')
 
   console.log(today, week)
@@ -15,8 +15,8 @@ export async function GET() {
       "receipt_number, branch, name, phone_number, expiry_date, created"
     )
     // .eq('branch', 'Talwandi')
-    .lt('expiry_date', today)
-    .gte('expiry_date', week);
+    .gte('expiry_date', today)
+    .lt('expiry_date', week);
 
   if (data.error === 'null') {
     return NextResponse.json({}, { status: 404 });
