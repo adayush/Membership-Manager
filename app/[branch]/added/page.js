@@ -1,6 +1,15 @@
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/api/auth/[...nextauth]/route";
 import StudentCard from "@/components/StudentCard";
 
 export default async function Added({ params }) {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    redirect(`/login?callbackUrl=/${params.branch}/added`)
+  }
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/added?branch=${params.branch}`, { next: { revalidate: 60 }});
   const data = await res.json();
 

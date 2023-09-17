@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { headers, cookies } from 'next/headers'
 import Header from "@/components/Header";
+import SessionProvider from "./components/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +17,10 @@ export default async function RootLayout({ children }) {
         <title>Space21 Management</title>
       </head>
       <body className={inter.className}>
-        <Header />
-        {children}
+        <SessionProvider>
+          <Header />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

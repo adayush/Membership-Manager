@@ -1,7 +1,15 @@
-import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/api/auth/[...nextauth]/route";
 import StudentCard from "@/components/StudentCard";
 
 export default async function Expired({ params }) {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    redirect(`/login?callbackUrl=/${params.branch}/expired`)
+  }
+  
   const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/expired?branch=${params.branch}`, { next: { revalidate: 60 } });
   const data = await res.json();
 

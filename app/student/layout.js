@@ -1,16 +1,16 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/api/auth/[...nextauth]/route";
-import ManagerHome from "@/components/ManagerHome";
 
-export default async function Home({ params }) {
+export default async function StudentLayout({ children }) {
   const session = await getServerSession(authOptions)
 
+  // TODO: Redirect to branch home depending on role
   if (!session) {
-    redirect(`/login?callbackUrl=/${params.branch}/`)
+    redirect(`/login`)
   }
 
   return (
-    <ManagerHome branch={params.branch} />
-  );
+    {children}
+  )
 }
