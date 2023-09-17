@@ -1,16 +1,14 @@
 "use client";
-import { useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
 
-export default function NewStudent() {
-  const searchParams = useSearchParams()
-  const branch = searchParams.get('branch')
-
+export default function EditStudent({ params }) {
+  const [isFormLoaded, setIsFormLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [formStatus, setFormStatus] = useState();
   const [formData, setFormData] = useState({
     receipt_number: null,
-    branch: branch || null,
+    branch: null,
     name: null,
     phone_number: null,
     expiry_date: null,
@@ -22,6 +20,15 @@ export default function NewStudent() {
     phone_number: null,
     expiry_date: null
   })
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student?receipt=${params.receipt}`)
+      .then(response => response.json())
+      .then((data) => {
+        setFormData(data)
+        setIsFormLoaded(true)
+      })
+  }, [])
 
   const validate = () => {
     const newErrors = {
@@ -80,30 +87,43 @@ export default function NewStudent() {
 
     setIsLoading(true);
 
-    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student/new`, {
-      method: "POST",
+    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student/edit`, {
+      method: "PUT",
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" },
     })
       .then(res => {
         // console.log(res.status, res.ok, res.statusText);
-        if (res.status === 201) {
+        if (res.status === 200) {
           // redirect to Home
           setFormStatus("Success");
           setTimeout(() => router.push('/'), 1000);
         } else {
           // failed to add student
-          setFormData("Failed");
+          setFormStatus("Failed");
         }
       });
-     setIsLoading(false);
+    setIsLoading(false);
   };
+
+  if (!isFormLoaded) {
+    return (
+      <main className="p-6 sm:p-24">
+      <div className="flex flex-col gap-5 m-auto max-w-sm [&>div>label]:block [&>div>label]:text-gray-800 [&>div>label]:text-sm [&>div>label]:font-medium [&>div>label]:mb-1 [&>div>input]:p-2 [&>div>input]:border-[1px] [&>div>input]:border-gray-300 [&>div>input]:rounded-sm [&>div>input]:bg-gray-100 [&>div>input]:w-full">
+        <h1 className="text-xl sm:text-2xl font-medium mb-2 text-center">
+          Edit Student
+        </h1>
+        <FormStatus formStatus="Loading" />
+      </div>
+    </main>
+    )
+  }
 
   return (
     <main className="p-6 sm:p-24">
       <div className="flex flex-col gap-5 m-auto max-w-sm [&>div>label]:block [&>div>label]:text-gray-800 [&>div>label]:text-sm [&>div>label]:font-medium [&>div>label]:mb-1 [&>div>input]:p-2 [&>div>input]:border-[1px] [&>div>input]:border-gray-300 [&>div>input]:rounded-sm [&>div>input]:bg-gray-100 [&>div>input]:w-full">
         <h1 className="text-xl sm:text-2xl font-medium mb-2 text-center">
-          New Student
+          Edit Student
         </h1>
         <FormStatus formStatus={formStatus} />
         <div>
@@ -111,8 +131,10 @@ export default function NewStudent() {
           <input
             type="number"
             autoComplete="off"
+            value={formData.receipt_number}
+            disabled
             required
-            onChange={(e) => handleChange(e, "receipt_number")}
+            // onChange={(e) => handleChange(e, "receipt_number")}
           />
           <span className="text-red-500">{errors["receipt_number"]}</span>
         </div>
@@ -121,7 +143,7 @@ export default function NewStudent() {
           <select
             type="select"
             onChange={(e) => handleChange(e, "branch")}
-            defaultValue={formData.branch || "default"}
+            value={formData.branch}
             required
             className="p-2 border-[1px] border-gray-300 rounded-sm bg-gray-100 w-full"
           >
@@ -140,6 +162,7 @@ export default function NewStudent() {
             type="text"
             autoComplete="off"
             required
+            value={formData.name}
             onChange={(e) => handleChange(e, "name")}
           />
           <span className="text-red-500">{errors["name"]}</span>
@@ -152,6 +175,7 @@ export default function NewStudent() {
             min={999999999}
             max={9999999999}
             required
+            value={formData.phone_number}
             onChange={(e) => handleChange(e, "phone_number")}
           />
           <span className="text-red-500">{errors["phone_number"]}</span>
@@ -163,6 +187,7 @@ export default function NewStudent() {
             autoComplete="off"
             required
             min={new Date().toISOString().split("T")[0]}
+            value={formData.expiry_date}
             onChange={(e) => handleChange(e, "expiry_date")}
           />
           <span className="text-red-500">{errors["expiry_date"]}</span>
@@ -172,7 +197,7 @@ export default function NewStudent() {
           onClick={handleSubmit}
           disabled={isLoading}
         >
-          {isLoading? 'Please wait' : 'Submit'}
+          {isLoading ? 'Please wait' : 'Submit'}
         </button>
       </div>
     </main>
@@ -182,17 +207,23 @@ export default function NewStudent() {
 
 function FormStatus({ formStatus }) {
   if (!formStatus) return;
-
+  else if (formStatus === "Loading") {
+    return (
+      <div className="border-2 border-blue-200 p-2 rounded-md text-blue-500">
+        <p>⏳ Loading student data...</p>
+      </div>
+    )
+  }
   else if (formStatus === "Success") {
     return (
-      <div className="border-2 border-red-200 p-2 rounded-md text-red-500">
-        <p>✅ Student added. Redirecting to home...</p>
+      <div className="border-2 border-green-200 p-2 rounded-md text-green-500">
+        <p>✅ Student updated. Redirecting to home...</p>
       </div>
     )
   } else {
     return (
       <div className="border-2 border-red-200 p-2 rounded-md text-red-500">
-        <p>! Failed creating student.</p>
+        <p>❗️ Failed updating student data.</p>
       </div>
     );
   }

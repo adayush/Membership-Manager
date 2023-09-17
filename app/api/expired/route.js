@@ -19,7 +19,6 @@ export async function GET(request) {
     .lt('expiry_date', today)
     .gte('expiry_date', week);
 
-  console.log("data", data)
   if (data.error === 'null') {
     return NextResponse.json({}, { status: 404 });
   } else {

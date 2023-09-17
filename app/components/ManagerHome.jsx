@@ -32,7 +32,7 @@ export default function ManagerHome({ branch }) {
               <h2>Expiring soon</h2>
             </div>
           </Link>
-          <Link href="/student/new" prefetch={false} className="bg-yellow-200">
+          <Link href={`/student/new?branch=${branch}`} prefetch={false} className="bg-yellow-200">
             <div>
               <h2>➕ Add new student</h2>
             </div>

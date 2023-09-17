@@ -10,7 +10,5 @@ export default async function StudentLayout({ children }) {
     redirect(`/login`)
   }
 
-  return (
-    {children}
-  )
+  return children
 }

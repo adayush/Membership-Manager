@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/api/auth/[...nextauth]/route";
@@ -8,7 +9,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    redirect(`/login?callbackUrl=/`)
+    redirect(`/login`)
   }
 
   const branches = [
@@ -31,6 +32,15 @@ export default async function Home() {
       <div className="flex flex-col gap-20 max-w-lg m-auto">
         <Greeting />
         <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
+          <div className="mb-6 flex justify-between gap-2">
+            <input
+              placeholder="Search student or receipt"
+              className="w-full p-2 focus:outline-none"
+            />
+            <button className="px-1">
+              <Image src="/images/search.png" width={30} height={30} alt="Search button" />
+            </button>
+          </div>
           {branches.map(branch => (
             <Link key={branch.value} href={`/${branch.value}`} prefetch={false}>
               <div>
