@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Greeting from "components/Greeting";
+import Greeting from "@/components/Greeting";
 import Image from "next/image";
 
-export default function ManagerHome() {
+export default function ManagerHome({ branch }) {
   return (
     <main className="p-12 pb-20 md:p-24 text-lg">
       <div className="flex flex-col gap-20 max-w-lg m-auto">
@@ -17,17 +17,17 @@ export default function ManagerHome() {
               <Image src="/images/search.png" width={30} height={30} alt="Search button" />
             </button>
           </div>
-          <Link href="/added" prefetch={false}>
+          <Link href={`/${branch}/added`} prefetch={false}>
             <div>
               <h2>Recently Added</h2>
             </div>
           </Link>
-          <Link href="/expired" prefetch={false}>
+          <Link href={`/${branch}/expired`} prefetch={false}>
             <div>
               <h2>Recently Expired</h2>
             </div>
           </Link>
-          <Link href="/expiring" prefetch={false}>
+          <Link href={`/${branch}/expiring`} prefetch={false}>
             <div>
               <h2>Expiring soon</h2>
             </div>

@@ -1,13 +1,10 @@
 'use client';
-import { signIn } from "next-auth/react";
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { authOptions } from "@/api/auth/[...nextauth]/route";
+import { useRef } from "react";
 
 export default async function Login() {
-  const session = await getServerSession(authOptions);
-  if (session) redirect('/');
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   return (
     <main className="p-12 pb-20 md:p-24 text-lg">
@@ -23,19 +20,19 @@ export default async function Login() {
             Login to<br />Space21 Management
           </h1>
         </div>
-        <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
-          <div onClick={() => signIn('google', { callbackUrl: '/'})}>
-            <Image className="inline mr-2" src="/images/google.png" width={24} height={24} alt="Google logo" />
-            <span>Login with Google</span>
-          </div>
-          {/* <div className="mb-6 flex justify-between gap-2">
-            <input
-              placeholder="email"
-              className="w-full p-2 focus:outline-none"
-            />
+        <div className="flex flex-col gap-4 [&>div>*]:w-full ">
+          <div>
+            <label>Email:</label>
+            <input type="email" ref={emailRef} className="p-3 mt-1 mb-4 border rounded-md" />
           </div>
           <div>
-            <h2>Recently Added</h2>
+            <label>Password:</label>
+            <input type="password" ref={passwordRef} className="p-3 mt-1 mb-4 border rounded-md" />
+          </div>
+          <button onClick={() => console.log("Login")} className="p-3 mt-1 mb-4 border rounded-md bg-black text-white font-medium">Login</button>
+          {/* <div onClick={() => signIn('google', { callbackUrl: '/'})}>
+            <Image className="inline mr-2" src="/images/google.png" width={24} height={24} alt="Google logo" />
+            <span>Login with Google</span>
           </div> */}
         </div>
       </div>

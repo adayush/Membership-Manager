@@ -124,9 +124,9 @@ export default function NewStudent() {
             <option selected disabled>
               Select Branch
             </option>
-            <option value="Indra Vihar">Indra Vihar</option>
-            <option value="Talwandi">Talwandi</option>
-            <option value="Dadabari">Dadabari</option>
+            <option value="indravihar">Indra Vihar</option>
+            <option value="talwandi">Talwandi</option>
+            <option value="dadabari">Dadabari</option>
           </select>
           <span className="text-red-500">{errors["branch"]}</span>
         </div>
