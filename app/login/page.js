@@ -9,8 +9,8 @@ export default function Login() {
   // const passwordRef = useRef();
 
   return (
-    <main className="p-12 pb-20 md:p-24 text-lg">
-      <div className="flex flex-col gap-20 max-w-lg m-auto">
+    <main className="p-12 pb-20 md:p-24 text-md">
+      <div className="flex flex-col gap-20 max-w-md m-auto">
         <div className="flex flex-col items-center gap-4">
           <Image
             src="/images/space21-logo.png"
@@ -22,7 +22,7 @@ export default function Login() {
             Login to<br />Space21 Management
           </h1>
         </div>
-        <div className="flex flex-col gap-4 [&>div>*]:w-full ">
+        <div className="flex flex-col gap-4 [&>div>div]:w-full ">
           {/* <div>
             <label>Email:</label>
             <input type="email" ref={emailRef} className="p-3 mt-1 mb-4 border rounded-md" />
@@ -32,8 +32,8 @@ export default function Login() {
             <input type="password" ref={passwordRef} className="p-3 mt-1 mb-4 border rounded-md" />
           </div>
           <button onClick={() => console.log("Login")} className="p-3 mt-1 mb-4 border rounded-md bg-black text-white font-medium">Login</button> */}
-          <div onClick={() => signIn('google', { callbackUrl: '/' })}>
-            <Image className="inline mr-2" src="/images/google.png" width={24} height={24} alt="Google logo" />
+          <div className="flex p-3 mt-1 mb-4 border rounded-md font-medium" onClick={() => signIn('google', { callbackUrl: '/' })}>
+            <Image className=" mr-3 h-[24px] flex w-auto" src="/images/google.png" width={24} height={24} alt="Google logo" />
             <span>Login with Google</span>
           </div>
         </div>
