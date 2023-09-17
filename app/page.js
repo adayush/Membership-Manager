@@ -32,7 +32,7 @@ export default async function Home() {
         <Greeting />
         <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
           {branches.map(branch => (
-            <Link href={`/${branch.value}`} prefetch={false}>
+            <Link key={branch.value} href={`/${branch.value}`} prefetch={false}>
               <div>
                 <h2>{branch.title}</h2>
               </div>
