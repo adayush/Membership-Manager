@@ -10,6 +10,15 @@ export default async function Home() {
 
   if (!session) {
     redirect(`/login`)
+  } else if (!session.user.branch) {
+    switch (session.user.branch) {
+      case "indravihar":
+        redirect('/indravihar');
+      case "talwandi":
+        redirect('/talwandi');
+      case "dadabari":
+        redirect('/dadabari');
+    }
   }
 
   const branches = [

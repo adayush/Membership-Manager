@@ -1,13 +1,9 @@
 'use client';
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-// import { useRef } from "react";
 
 
 export default function Login() {
-  // const emailRef = useRef();
-  // const passwordRef = useRef();
-
   return (
     <main className="p-12 pb-20 md:p-24 text-md">
       <div className="flex flex-col gap-20 max-w-md m-auto">
@@ -32,7 +28,7 @@ export default function Login() {
             <input type="password" ref={passwordRef} className="p-3 mt-1 mb-4 border rounded-md" />
           </div>
           <button onClick={() => console.log("Login")} className="p-3 mt-1 mb-4 border rounded-md bg-black text-white font-medium">Login</button> */}
-          <div className="flex p-3 mt-1 mb-4 border rounded-md font-medium" onClick={() => signIn('google', { callbackUrl: '/' })}>
+          <div className="flex p-3 mt-1 mb-4 border rounded-md font-medium cursor-pointer" onClick={() => signIn('google', { callbackUrl: '/' })}>
             <Image className=" mr-3 h-[24px] flex w-auto" src="/images/google.png" width={24} height={24} alt="Google logo" />
             <span>Login with Google</span>
           </div>

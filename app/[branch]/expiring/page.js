@@ -8,6 +8,8 @@ export default async function Expired({ params }) {
 
   if (!session) {
     redirect(`/login?callbackUrl=/${params.branch}/expiring`)
+  } else if (session.user.branch && session.user.branch !== params.branch) {
+    redirect(`/${session.user.branch}/expiring`)
   }
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/expiring?branch=${params.branch}`, { next: { revalidate: 60 }});

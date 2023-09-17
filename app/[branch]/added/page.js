@@ -8,6 +8,8 @@ export default async function Added({ params }) {
 
   if (!session) {
     redirect(`/login?callbackUrl=/${params.branch}/added`)
+  } else if (session.user.branch && session.user.branch !== params.branch) {
+    redirect(`/${session.user.branch}/added`)
   }
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/added?branch=${params.branch}`, { next: { revalidate: 60 }});
