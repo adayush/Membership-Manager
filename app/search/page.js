@@ -12,6 +12,16 @@ export default function Search() {
   const query = params.get('query');
   const queryInputRef = useRef(query || null);
 
+  const handleSubmit = async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/search?receipt=${queryInputRef.current.value}`);
+    const data = await res.json()
+    setResults(data)
+  }
+
   useEffect(() => {
     if (query) {
       handleSubmit();
@@ -24,16 +34,6 @@ export default function Search() {
     redirect(`/login?callbackUrl=/search`)
   } else if (session.status === "loading") {
     return null
-  }  
-
-  const handleSubmit = async (e) => {
-    if (e) {
-      e.preventDefault();
-    }
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/search?receipt=${queryInputRef.current.value}`);
-    const data = await res.json()
-    setResults(data)
   }
 
   return (

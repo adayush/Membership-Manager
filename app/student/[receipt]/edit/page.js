@@ -132,9 +132,8 @@ export default function EditStudent({ params }) {
             type="number"
             autoComplete="off"
             value={formData.receipt_number}
-            disabled
             required
-            // onChange={(e) => handleChange(e, "receipt_number")}
+            onChange={(e) => handleChange(e, "receipt_number")}
           />
           <span className="text-red-500">{errors["receipt_number"]}</span>
         </div>

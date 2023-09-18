@@ -6,9 +6,9 @@ import supabase from "@/utils/supabase";
 export async function PUT(request) {
   const session = await getServerSession(authOptions)
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized"}, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  
+
   const formData = await request.json();
 
   // console.log('\nForm data received', formData, "\n");
@@ -16,6 +16,7 @@ export async function PUT(request) {
   const data = await supabase
     .from("Receipts")
     .update({
+      receipt_number: formData.receipt_number,
       name: formData.name,
       branch: formData.branch,
       phone_number: formData.phone_number,
