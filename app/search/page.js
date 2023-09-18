@@ -1,10 +1,17 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import StudentCard from "@/components/StudentCard";
+import { useSession } from "next-auth/react";
 
 export default function Search() {
+  const { data } = useSession();
+
+  if (!data) {
+    redirect(`/login?callbackUrl=/search`)
+  }
+
   const [results, setResults] = useState();
   const params = useSearchParams();
   const query = params.get('query');

@@ -34,12 +34,17 @@ export default async function Home() {
         <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
           <SearchBar />
           {Object.keys(branches).map(branch => (
-            <Link key={branch} href={`/${branch}`} prefetch={false}>
+            <Link key={branch} href={`/${branch}`}>
               <div>
                 <h2>{branches[branch]}</h2>
               </div>
             </Link>
           ))}
+          <Link href={`/staff`} prefetch={false}>
+            <div>
+              <h2>Manage Staff</h2>
+            </div>
+          </Link>
         </div>
       </div>
     </main>

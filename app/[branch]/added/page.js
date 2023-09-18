@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/api/auth/[...nextauth]/route";
 import StudentCard from "@/components/StudentCard";
+import { headers } from "next/headers"
 
 export default async function Added({ params }) {
   const session = await getServerSession(authOptions)
@@ -12,7 +13,11 @@ export default async function Added({ params }) {
     redirect(`/${session.user.branch}/added`)
   }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/added?branch=${params.branch}`, { next: { revalidate: 60 }});
+  const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/added?branch=${params.branch}`, {
+    method: "GET",
+    headers: headers(), // by default headers are not passed for security
+    next: { revalidate: 60 }
+  });
   const data = await res.json();
 
   if (res.status === 200 && data.length !== 0)
