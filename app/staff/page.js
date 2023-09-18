@@ -16,7 +16,7 @@ export default async function Staff() {
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/staff`, {
     method: "GET",
-    // headers: headers(),
+    headers: headers(), 
   });
   const data = await res.json()
 
