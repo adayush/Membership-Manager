@@ -1,17 +1,19 @@
+"use client";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/api/auth/[...nextauth]/route";
+import { useSession } from "next-auth/react";
 import Greeting from "@/components/Greeting";
 import SearchBar from "@/components/SearchBar"
 
-export default async function Home() {
-  const session = await getServerSession(authOptions)
+export default function Home() {
+  const session = useSession();
 
-  if (!session) {
+  if (session.status === "loading") {
+    return null
+  } else if (session.status === "unauthenticated") {
     redirect(`/login`)
-  } else if (session.user.branch) {
-    switch (session.user.branch) {
+  } else if (session.data.user.branch) {
+    switch (session.data.user.branch) {
       case "indravihar":
         redirect('/indravihar');
       case "talwandi":
@@ -30,7 +32,7 @@ export default async function Home() {
   return (
     <main className="p-12 pb-20 md:p-24 text-lg">
       <div className="flex flex-col gap-20 max-w-lg m-auto">
-        <Greeting name={session.user.name} />
+        <Greeting name={session.data.user.name} />
         <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
           <SearchBar />
           {Object.keys(branches).map(branch => (

@@ -1,12 +1,14 @@
-import { getServerSession } from "next-auth";
+"use client";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/api/auth/[...nextauth]/route";
 
-export default async function StudentLayout({ children }) {
-  const session = await getServerSession(authOptions)
+export default function StudentLayout({ children }) {
+  const session = useSession();
 
   // TODO: Redirect to branch home depending on role
-  if (!session) {
+  if (session.status === "loading") {
+    return null
+  } else if (session.status === "unauthenticated") {
     redirect(`/login`)
   }
 

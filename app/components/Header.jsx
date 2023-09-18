@@ -1,11 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/api/auth/[...nextauth]/route";
 import Avatar from "./Avatar";
+import { useSession } from "next-auth/react";
 
-export default async function Header() {
-  const session = await getServerSession(authOptions);
+export default function Header() {
+  const session = useSession();
+
+  if (session.status === "loading") {
+    return null
+  }
 
   return (
     <header className="bg-black text-white">
@@ -24,8 +28,8 @@ export default async function Header() {
               </h1>
             </div>
           </Link>
-          {session && (
-            <Avatar name={session.user.name} image={session.user.image} />
+          {session.data && (
+            <Avatar name={session.data.user.name} image={session.data.user.image} />
           )}
         </div>
       </div>

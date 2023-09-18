@@ -1,24 +1,29 @@
+"use client";
 import Link from "next/link";
 import StaffCard from "@/components/StaffCard";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/api/auth/[...nextauth]/route";
-import { headers } from "next/headers";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
-export default async function Staff() {
-  const session = await getServerSession(authOptions)
+export default function Staff() {
+  const session = useSession();
+  const [data, setData] = useState();
 
-  if (!session) {
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/staff`)
+      .then(response => response.json())
+      .then(data => setData(data))
+  }, [])
+
+  if (session.status === "loading") {
+    return null
+  } else if (session.status === "unauthenticated") {
     redirect(`/login?callbackUrl=/staff`)
-  } else if (session.user.branch) {
-    redirect(`/${session.user.branch}`)
+  } else if (session.status == "loading") {
+    return null
+  } else if (session.data.user.branch) {
+    redirect(`/${session.data.user.branch}`)
   }
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/staff`, {
-    method: "GET",
-    headers: headers(), 
-  });
-  const data = await res.json()
 
   return (
     <main className="p-6 md:p-24">

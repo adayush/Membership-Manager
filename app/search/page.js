@@ -6,16 +6,10 @@ import StudentCard from "@/components/StudentCard";
 import { useSession } from "next-auth/react";
 
 export default function Search() {
-  const { data } = useSession();
-
-  if (!data) {
-    redirect(`/login?callbackUrl=/search`)
-  }
-
+  const session = useSession();
   const [results, setResults] = useState();
   const params = useSearchParams();
   const query = params.get('query');
-
   const queryInputRef = useRef(query || null);
 
   useEffect(() => {
@@ -23,6 +17,14 @@ export default function Search() {
       handleSubmit();
     }
   }, [])
+
+  if (session.status === "loading") {
+    return null
+  } else if (session.status === "unauthenticated") {
+    redirect(`/login?callbackUrl=/search`)
+  } else if (session.status === "loading") {
+    return null
+  }  
 
   const handleSubmit = async (e) => {
     if (e) {

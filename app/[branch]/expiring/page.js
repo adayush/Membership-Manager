@@ -1,26 +1,30 @@
-import { getServerSession } from "next-auth";
+"use client";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/api/auth/[...nextauth]/route";
 import StudentCard from "@/components/StudentCard";
-import { headers } from "next/headers";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
-export default async function Expired({ params }) {
-  const session = await getServerSession(authOptions)
+export default function Expiring({ params }) {
+  const session = useSession();
+  const [data, setData] = useState();
 
-  if (!session) {
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/expiring?branch=${params.branch}`)
+      .then(response => response.json())
+      .then(data => setData(data))
+  }, [])
+
+  if (session.status === "loading") {
+    return null
+  } else if (session.status === "unauthenticated") {
     redirect(`/login?callbackUrl=/${params.branch}/expiring`)
-  } else if (session.user.branch && session.user.branch !== params.branch) {
-    redirect(`/${session.user.branch}/expiring`)
+  } else if (session.status == "loading") {
+    return null
+  } else if (session.data.user.branch && session.data.user.branch !== params.branch) {
+    redirect(`/${session.data.user.branch}/expiring`)
   }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/expiring?branch=${params.branch}`, {
-    method: "GET",
-    headers: headers(),
-    next: { revalidate: 60 }
-  });
-  const data = await res.json();
-
-  if (res.status === 200 && data.length !== 0)
+  if (data && data.length !== 0)
     return (
       <main className="p-6 md:p-20">
         <h1 className="text-xl sm:text-2xl font-medium mb-8 text-center">
@@ -30,7 +34,7 @@ export default async function Expired({ params }) {
           <p className="text-right text-gray-500">{data.length} students</p>
           <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {data?.map((student) => (
-              <StudentCard key={student["receipt_number"]} student={student} />
+              <StudentCard key={student.receipt_number} student={student} />
             ))}
           </div>
         </div>
