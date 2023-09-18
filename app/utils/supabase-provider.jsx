@@ -1,40 +1,40 @@
-'use client'
+// 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { useRouter } from 'next/navigation'
+// import { createContext, useContext, useEffect, useState } from 'react'
+// import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+// import { useRouter } from 'next/navigation'
 
-const Context = createContext(undefined)
+// const Context = createContext(undefined)
 
-export default function SupabaseProvider({ children, session }) {
-  const [supabase] = useState(() => createBrowserSupabaseClient())
-  const router = useRouter()
+// export default function SupabaseProvider({ children, session }) {
+//   const [supabase] = useState(() => createBrowserSupabaseClient())
+//   const router = useRouter()
 
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      router.refresh()
-    })
+//   useEffect(() => {
+//     const {
+//       data: { subscription },
+//     } = supabase.auth.onAuthStateChange(() => {
+//       router.refresh()
+//     })
 
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [router, supabase])
+//     return () => {
+//       subscription.unsubscribe()
+//     }
+//   }, [router, supabase])
 
-  return (
-    <Context.Provider value={{ supabase, session }}>
-      {children}
-    </Context.Provider>
-  )
-}
+//   return (
+//     <Context.Provider value={{ supabase, session }}>
+//       {children}
+//     </Context.Provider>
+//   )
+// }
 
-export const useSupabaseClient = () => {
-  const context = useContext(Context)
+// export const useSupabaseClient = () => {
+//   const context = useContext(Context)
 
-  if (context === undefined) {
-    throw new Error('useSupabase must be used inside SupabaseProvider')
-  }
+//   if (context === undefined) {
+//     throw new Error('useSupabase must be used inside SupabaseProvider')
+//   }
 
-  return context
-}
+//   return context
+// }
