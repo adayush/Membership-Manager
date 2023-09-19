@@ -26,22 +26,22 @@ export default function Branch({ params }) {
         <Greeting name={session.data.user.name} branch={session.data.user.branch} />
         <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
           <SearchBar />
-          <Link href={`/${branch}/added`} prefetch={false}>
+          <Link href={`/${branch}/added`} prefetch={false} className="hover:bg-gray-100">
             <div>
               <h2>Recently Added</h2>
             </div>
           </Link>
-          <Link href={`/${branch}/expired`} prefetch={false}>
+          <Link href={`/${branch}/expired`} prefetch={false} className="hover:bg-gray-100">
             <div>
               <h2>Recently Expired</h2>
             </div>
           </Link>
-          <Link href={`/${branch}/expiring`} prefetch={false}>
+          <Link href={`/${branch}/expiring`} prefetch={false} className="hover:bg-gray-100">
             <div>
               <h2>Expiring soon</h2>
             </div>
           </Link>
-          <Link href={`/student/new?branch=${branch}`} prefetch={false} className="bg-yellow-200">
+          <Link href={`/student/new?branch=${branch}`} prefetch={false} className="bg-yellow-200 hover:bg-yellow-300">
             <div>
               <h2>➕ Add new student</h2>
             </div>

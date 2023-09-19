@@ -10,7 +10,8 @@ export async function GET(request) {
   }
 
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get("receipt") || searchParams.get("name");
+  const query = searchParams.get("query");
+  // const branch = searchParams.get("branch");
 
   let data = null;
 

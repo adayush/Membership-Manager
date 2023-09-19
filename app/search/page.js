@@ -17,7 +17,7 @@ export default function Search() {
       e.preventDefault();
     }
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/search?receipt=${queryInputRef.current.value}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/search?query=${queryInputRef.current.value}&branch=${session.data.user.branch}`);
     const data = await res.json()
     setResults(data)
   }
@@ -53,7 +53,7 @@ export default function Search() {
         <div className="border-gray-200 border-t-2"></div>
         <div className="flex flex-col gap-4">
           {results?.map((student, i) => (
-            <StudentCard student={student} key={i} />
+            <StudentCard key={i} student={student} showBranch={true} />
           ))}
         </div>
       </div>

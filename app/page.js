@@ -36,13 +36,13 @@ export default function Home() {
         <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
           <SearchBar />
           {Object.keys(branches).map(branch => (
-            <Link key={branch} href={`/${branch}`}>
+            <Link key={branch} href={`/${branch}`} className="hover:bg-gray-100">
               <div>
                 <h2>{branches[branch]}</h2>
               </div>
             </Link>
           ))}
-          <Link href={`/staff`} prefetch={false}>
+          <Link href={`/staff`} prefetch={false} className="hover:bg-gray-100">
             <div>
               <h2>Manage Staff</h2>
             </div>

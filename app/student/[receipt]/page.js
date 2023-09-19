@@ -10,7 +10,10 @@ export default function Student({ params }) {
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student?receipt=${params.receipt}`)
       .then(response => response.json())
-      .then(data => setData(data))
+      .then(data => setData({
+        ...data,
+        branch: getBranchName(data.branch)
+      }))
   }, [])
 
   if (!data || data.length === 0)
@@ -19,8 +22,6 @@ export default function Student({ params }) {
         <p className="text-lg">404: Receipt Not Found</p>
       </main>
     )
-
-  data.branch = getBranchName(data.branch)
 
   return (
     <main className="p-6 md:p-24">
@@ -39,7 +40,9 @@ export default function Student({ params }) {
         </div>
         <div>
           <p className="text-sm text-gray-500 mb-1">Phone Number</p>
-          <p className="text-gray-800 text-xl">{data.phone_number}</p>
+          <a href={`tel:+91${data.phone_number}`}>
+            <p className="text-gray-800 text-xl">{data.phone_number}</p>
+          </a>
         </div>
         <div>
           <p className="text-sm text-gray-500 mb-1">Membership Expiry Date</p>
