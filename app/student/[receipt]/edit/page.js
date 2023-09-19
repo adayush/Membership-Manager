@@ -28,7 +28,7 @@ export default function EditStudent({ params }) {
         setFormData(data)
         setIsFormLoaded(true)
       })
-  }, [])
+  }, [params.receipt])
 
   const validate = () => {
     const newErrors = {

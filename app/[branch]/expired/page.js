@@ -12,7 +12,7 @@ export default function Expired({ params }) {
     fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/expired?branch=${params.branch}`)
       .then(response => response.json())
       .then(data => setData(data))
-  }, [])
+  }, [params.branch])
 
   if (session.status === "loading") {
     return null

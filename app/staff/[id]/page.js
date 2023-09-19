@@ -30,7 +30,7 @@ export default function EditStaff({ params }) {
         setFormData(data[0])
         setIsFormLoaded(true)
       })
-  }, [])
+  }, [params.id])
 
   const validate = () => {
     const newErrors = {

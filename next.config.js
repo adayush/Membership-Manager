@@ -1,4 +1,9 @@
-module.exports = {
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  dynamicStartUrlRedirect: true,
+})
+
+module.exports = withPWA({
   images: {
     remotePatterns: [
       {
@@ -7,4 +12,4 @@ module.exports = {
       }
     ]
   }
-}
+})

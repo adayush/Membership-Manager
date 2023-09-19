@@ -14,7 +14,7 @@ export default function Student({ params }) {
         ...data,
         branch: getBranchName(data.branch)
       }))
-  }, [])
+  }, [params.receipt])
 
   if (!data || data.length === 0)
     return (

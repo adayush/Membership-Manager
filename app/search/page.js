@@ -26,7 +26,7 @@ export default function Search() {
     if (query) {
       handleSubmit();
     }
-  }, [])
+  }, [query])
 
   if (session.status === "loading") {
     return null
