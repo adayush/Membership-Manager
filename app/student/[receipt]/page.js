@@ -23,7 +23,7 @@ export default function Student({ params }) {
   } else if (data.length === 0) {
     return (
       <main className="p-6 md:p-24">
-        <p className="text-lg">Sorry, this student's data is not available.</p>
+        <p className="text-lg">Sorry, this student&apos;s data is not available.</p>
       </main>
     )
   } else {
