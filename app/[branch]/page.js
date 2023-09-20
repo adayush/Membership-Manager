@@ -12,8 +12,6 @@ export default function Branch({ params }) {
     return null
   } else if (session.status === "unauthenticated") {
     redirect(`/login?callbackUrl=/${params.branch}/`)
-  } else if (session.status == "loading") {
-    return null
   } else if (session.data.user.branch && session.data.user.branch !== params.branch) {
     redirect(`/${session.data.user.branch}`)
   }

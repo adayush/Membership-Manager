@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { redirect, useSearchParams } from "next/navigation";
 import StudentCard from "@/components/StudentCard";
 import { useSession } from "next-auth/react";
+import Loader from "@/components/Loader";
 
 export default function Search() {
   const session = useSession();
@@ -32,31 +33,33 @@ export default function Search() {
     return null
   } else if (session.status === "unauthenticated") {
     redirect(`/login?callbackUrl=/search`)
-  } else if (session.status === "loading") {
-    return null
   }
 
-  return (
-    <main className="p-6 md:p-24">
-      <div className="flex flex-col gap-4 max-w-2xl m-auto">
-        <form onSubmit={handleSubmit} className="flex justify-between px-3 py-2 gap-2 border rounded-md">
-          <input
-            placeholder="Search student or receipt"
-            className="w-full p-2 focus:outline-none"
-            ref={queryInputRef}
-            defaultValue={query}
-          />
-          <button type="submit" className="px-1">
-            <Image src="/images/search.png" width={30} height={30} alt="Search button" />
-          </button>
-        </form>
-        <div className="border-gray-200 border-t-2"></div>
-        <div className="flex flex-col gap-4">
-          {results?.map((student, i) => (
-            <StudentCard key={i} student={student} showBranch={true} />
-          ))}
+  if (results === undefined) {
+    return <Loader />
+  } else {
+    return (
+      <main className="p-6 md:p-24">
+        <div className="flex flex-col gap-4 max-w-2xl m-auto">
+          <form onSubmit={handleSubmit} className="flex justify-between px-3 py-2 gap-2 border rounded-md">
+            <input
+              placeholder="Search student or receipt"
+              className="w-full p-2 focus:outline-none"
+              ref={queryInputRef}
+              defaultValue={query}
+            />
+            <button type="submit" className="px-1">
+              <Image src="/images/search.png" width={30} height={30} alt="Search button" />
+            </button>
+          </form>
+          <div className="border-gray-200 border-t-2"></div>
+          <div className="flex flex-col gap-4">
+            {results?.map((student, i) => (
+              <StudentCard key={i} student={student} showBranch={true} />
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
-  )
+      </main>
+    );
+  }
 }

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import StudentCard from "@/components/StudentCard";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Loader from "@/components/Loader";
 
 export default function Expiring({ params }) {
   const session = useSession();
@@ -18,13 +19,20 @@ export default function Expiring({ params }) {
     return null
   } else if (session.status === "unauthenticated") {
     redirect(`/login?callbackUrl=/${params.branch}/expiring`)
-  } else if (session.status == "loading") {
-    return null
   } else if (session.data.user.branch && session.data.user.branch !== params.branch) {
     redirect(`/${session.data.user.branch}/expiring`)
   }
 
-  if (data && data.length !== 0)
+  if (data === undefined) {
+    return <Loader />
+  } else if (data && data.length !== 0) {
+    return (
+      <main className="flex p-6 md:p-24">
+        <h2 className="m-auto w-60 text-center text-lg text-gray-700">No students&apos; membership expiring within the next week.</h2>
+      </main>
+    );
+  }
+  else {
     return (
       <main className="p-6 md:p-20">
         <h1 className="text-xl sm:text-2xl font-medium mb-8 text-center">
@@ -39,11 +47,6 @@ export default function Expiring({ params }) {
           </div>
         </div>
       </main>
-    );
-  else
-    return (
-      <main className="flex p-6 md:p-24">
-        <h2 className="m-auto w-60 text-center text-lg text-gray-700">No students&apos; membership expiring within the next week.</h2>
-      </main>
-    );
+    )
+  }
 }
