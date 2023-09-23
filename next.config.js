@@ -1,9 +1,4 @@
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  dynamicStartUrlRedirect: true,
-})
-
-module.exports = withPWA({
+const next_config = {
   images: {
     remotePatterns: [
       {
@@ -12,4 +7,16 @@ module.exports = withPWA({
       }
     ]
   }
-})
+}
+
+if (process.env.environment === "development") {
+  module.exports = next_config
+} else {
+
+  const withPWA = require('next-pwa')({
+    dest: 'public',
+    dynamicStartUrlRedirect: true,
+  })
+
+  module.exports = withPWA(next_config)
+}

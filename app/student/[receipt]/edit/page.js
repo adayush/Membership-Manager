@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import config from "@/config";
 
 export default function EditStudent({ params }) {
   const [isFormLoaded, setIsFormLoaded] = useState(false)
@@ -93,7 +94,6 @@ export default function EditStudent({ params }) {
       headers: { "Content-Type": "application/json" },
     })
       .then(res => {
-        // console.log(res.status, res.ok, res.statusText);
         if (res.status === 200) {
           // redirect to Home
           setFormStatus("Success");
@@ -149,9 +149,9 @@ export default function EditStudent({ params }) {
             <option value="default" disabled>
               Select Branch
             </option>
-            <option value="indravihar">Indra Vihar</option>
-            <option value="talwandi">Talwandi</option>
-            <option value="dadabari">Dadabari</option>
+            {Object.keys(config.branch_list).map(branch => (
+              <option key={branch} value={branch}>{config.branch_list[branch]}</option>
+            ))}
           </select>
           <span className="text-red-500">{errors["branch"]}</span>
         </div>

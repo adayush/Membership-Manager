@@ -1,5 +1,4 @@
 "use client";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import Greeting from "@/components/Greeting";
 import SearchBar from "@/components/SearchBar";
@@ -7,14 +6,6 @@ import { useSession } from "next-auth/react";
 
 export default function Branch({ params }) {
   const session = useSession();
-
-  if (session.status === "loading") {
-    return null
-  } else if (session.status === "unauthenticated") {
-    redirect(`/login?callbackUrl=/${params.branch}/`)
-  } else if (session.data.user.branch && session.data.user.branch !== params.branch) {
-    redirect(`/${session.data.user.branch}`)
-  }
 
   const branch = session.data.user.branch || params.branch;
 

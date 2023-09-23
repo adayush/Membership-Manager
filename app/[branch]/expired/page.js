@@ -1,12 +1,9 @@
 "use client";
-import { redirect } from "next/navigation";
 import StudentCard from "@/components/StudentCard";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader";
 
 export default function Expired({ params }) {
-  const session = useSession();
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -14,14 +11,6 @@ export default function Expired({ params }) {
       .then(response => response.json())
       .then(data => setData(data))
   }, [params.branch])
-
-  if (session.status === "loading") {
-    return null
-  } else if (session.status === "unauthenticated") {
-    redirect(`/login?callbackUrl=/${params.branch}/expired`)
-  } else if (session.data.user.branch && session.data.user.branch !== params.branch) {
-    redirect(`/${session.data.user.branch}/expired`)
-  }
 
   if (data === undefined) {
     return <Loader />

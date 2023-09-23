@@ -14,7 +14,10 @@ export async function GET(request, { params }) {
     .select(
       "id, name, branch, phone_number, email, is_active"
     )
+    .eq("role", "manager")
     .eq("id", params.id)
+    .limit(1)
+    .single()
 
   if (data.error) {
     return NextResponse.json({ statusText: data.statusText }, { status: data.status });

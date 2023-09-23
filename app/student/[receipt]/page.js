@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import getBranchName from "@/utils/getBranchName";
 import Loader from "@/components/Loader";
+import config from "@/config";
 
 export default function Student({ params }) {
   const [data, setData] = useState();
@@ -13,7 +13,7 @@ export default function Student({ params }) {
       .then(response => response.json())
       .then(data => setData({
         ...data,
-        branch: getBranchName(data.branch)
+        branch: config.branch_list[data.branch]
       }))
   }, [params.receipt])
 

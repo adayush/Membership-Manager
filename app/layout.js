@@ -2,22 +2,23 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import SessionProvider from "./components/Provider";
+import config from "@/config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Space21 Management",
-  description: "Manage Space21 staff and students",
+  title: config.app_title,
+  description: config.description,
 };
 
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="application-name" content="Space21 Management" />
+        <meta name="application-name" content={config.app_title} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Space21 Management" />
+        <meta name="apple-mobile-web-app-title" content={config.app_title} />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -36,18 +37,18 @@ export default async function RootLayout({ children }) {
         <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5" />
         <link rel="shortcut icon" href="/favicon.ico" />
 
-        <meta name="twitter:card" content="Manage Space21 staff and students" />
-        <meta name="twitter:url" content="https://space21.vercel.app" />
-        <meta name="twitter:title" content="Space21 Management" />
-        <meta name="twitter:description" content="Manage Space21 staff and students" />
-        <meta name="twitter:image" content="https://space21.vercel.app/icons/android-chrome-192x192.png" />
-        <meta name="twitter:creator" content="@DavidWShadow" />
+        <meta name="twitter:card" content={config.description} />
+        <meta name="twitter:url" content={config.url} />
+        <meta name="twitter:title" content={config.app_title} />
+        <meta name="twitter:description" content={config.description} />
+        <meta name="twitter:image" content={`${config.url}/icons/android-chrome-192x192.png`} />
+        <meta name="twitter:creator" content="@ayush_dhingra_" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Space21 Management" />
-        <meta property="og:description" content="Manage Space21 staff and students" />
-        <meta property="og:site_name" content="Space21 Management" />
-        <meta property="og:url" content="https://space21.vercel.app" />
-        <meta property="og:image" content="https://space21.vercel.app/icons/apple-touch-icon.png" />
+        <meta property="og:title" content={config.app_title} />
+        <meta property="og:description" content={config.description} />
+        <meta property="og:site_name" content={config.app_title} />
+        <meta property="og:url" content={config.url} />
+        <meta property="og:image" content={`${config.url}/icons/apple-touch-icon.png`} />
 
       </head>
       <body className={inter.className}>

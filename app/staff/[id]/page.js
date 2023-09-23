@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
+import config from "@/config";
 
 export default function EditStaff({ params }) {
   const [isFormLoaded, setIsFormLoaded] = useState(false)
@@ -27,7 +28,10 @@ export default function EditStaff({ params }) {
     fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/staff/${params.id}`)
       .then(response => response.json())
       .then((data) => {
-        setFormData(data[0])
+        setFormData({
+          ...data,
+          is_active: data.is_active ? "true" : "false"
+        })
         setIsFormLoaded(true)
       })
   }, [params.id])
@@ -51,11 +55,9 @@ export default function EditStaff({ params }) {
       newErrors["name"] = 'Name is too short.'
     }
     if (!formData.phone_number) {
+      newErrors["phone_number"] = 'Please input a phone number.'
     } else if (formData.phone_number < 1000000000 || formData.phone_number > 9999999999) {
-      newErrors["phone_number"] = 'Phone number must have 10 digits, please check'
-    }
-    if (!formData.is_active) {
-      newErrors["is_active"] = 'Please select staff status.'
+      newErrors["phone_number"] = 'Phone number must have 10 digits, please check.'
     }
 
     let isValid = true
@@ -90,7 +92,6 @@ export default function EditStaff({ params }) {
       headers: { "Content-Type": "application/json" },
     })
       .then(res => {
-        // console.log(res.status, res.ok, res.statusText);
         if (res.status === 200) {
           // redirect to Home
           setFormStatus("Success");
@@ -158,9 +159,9 @@ export default function EditStaff({ params }) {
             <option value="default" disabled>
               Select Branch
             </option>
-            <option value="indravihar">Indra Vihar</option>
-            <option value="talwandi">Talwandi</option>
-            <option value="dadabari">Dadabari</option>
+            {Object.keys(config.branch_list).map(branch => (
+              <option key={branch} value={branch}>{config.branch_list[branch]}</option>
+            ))}
           </select>
           <span className="text-red-500">{errors["branch"]}</span>
         </div>
@@ -188,8 +189,8 @@ export default function EditStaff({ params }) {
           <label>Staff status</label>
           <select
             type="select"
-            onChange={(e) => handleChange(e, "branch")}
-            value={formData.is_active ? "true" : "false"}
+            onChange={(e) => handleChange(e, "is_active")}
+            value={formData.is_active}
             required
             className="p-2 border-[1px] border-gray-300 rounded-sm bg-gray-100 w-full"
           >

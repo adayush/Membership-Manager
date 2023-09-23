@@ -13,7 +13,7 @@ export const authOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user }) {
       const data = await supabase
         .from("users")
         .select("role")
@@ -22,7 +22,7 @@ export const authOptions = {
       if (data.error || data.data.length === 0) return false;
       else return true;
     },
-    async session({ session, user }) {
+    async session({ session }) {
       const { data, error } = await supabase
         .from("users")
         .select("name, role, branch")

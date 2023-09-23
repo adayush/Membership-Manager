@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter, useSearchParams } from 'next/navigation'
+import config from "@/config";
 
 export default function NewStudent() {
   const searchParams = useSearchParams()
@@ -86,7 +87,6 @@ export default function NewStudent() {
       headers: { "Content-Type": "application/json" },
     })
       .then(res => {
-        // console.log(res.status, res.ok, res.statusText);
         if (res.status === 201) {
           // redirect to Home
           setFormStatus("Success");
@@ -128,9 +128,9 @@ export default function NewStudent() {
             <option value="default" disabled>
               Select Branch
             </option>
-            <option value="indravihar">Indra Vihar</option>
-            <option value="talwandi">Talwandi</option>
-            <option value="dadabari">Dadabari</option>
+            {Object.keys(config.branch_list).map(branch => (
+              <option key={branch} value={branch}>{config.branch_list[branch]}</option>
+            ))}
           </select>
           <span className="text-red-500">{errors["branch"]}</span>
         </div>

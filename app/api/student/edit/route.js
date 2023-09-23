@@ -11,8 +11,6 @@ export async function PUT(request) {
 
   const formData = await request.json();
 
-  // console.log('\nForm data received', formData, "\n");
-
   const data = await supabase
     .from("Receipts")
     .update({

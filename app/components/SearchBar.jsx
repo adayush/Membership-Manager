@@ -9,7 +9,6 @@ export default function SearchBar() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("redirecting")
     router.push(`/search?query=${queryInputRef.current.value}`)
   }
 

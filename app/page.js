@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Greeting from "@/components/Greeting";
 import SearchBar from "@/components/SearchBar"
+import config from "@/config";
 
 export default function Home() {
   const session = useSession();
@@ -12,21 +13,8 @@ export default function Home() {
     return null
   } else if (session.status === "unauthenticated") {
     redirect(`/login`)
-  } else if (session.data.user.branch) {
-    switch (session.data.user.branch) {
-      case "indravihar":
-        redirect('/indravihar');
-      case "talwandi":
-        redirect('/talwandi');
-      case "dadabari":
-        redirect('/dadabari');
-    }
-  }
-
-  const branches = {
-    "indravihar": "Indra Vihar",
-    "talwandi": "Talwandi",
-    "dadabari": "Dadabari",
+  } else if (config.branch_list[session.data.user.branch]) {
+    redirect(`/${session.data.user.branch}`);
   }
 
   return (
@@ -35,10 +23,10 @@ export default function Home() {
         <Greeting name={session.data.user.name} />
         <div className="flex flex-col gap-4 text-center [&>*]:p-3 [&>*]:border [&>*]:rounded-md">
           <SearchBar />
-          {Object.keys(branches).map(branch => (
+          {Object.keys(config.branch_list).map(branch => (
             <Link key={branch} href={`/${branch}`} className="hover:bg-gray-100">
               <div>
-                <h2>{branches[branch]}</h2>
+                <h2>{config.branch_list[branch]}</h2>
               </div>
             </Link>
           ))}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import getBranchName from "@/utils/getBranchName";
+import config from "@/config";
 
 export default function StudentCard({ student, showBranch }) {
   return (
@@ -18,7 +18,7 @@ export default function StudentCard({ student, showBranch }) {
         <div>
           <div>
             {showBranch && (
-              <p className="text-sm w-full">{getBranchName(student.branch)}</p>
+              <p className="text-sm w-full">{config.branch_list[student.branch]}</p>
             )}
           </div>
           <div className="flex justify-end gap-2">

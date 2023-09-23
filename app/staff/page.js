@@ -1,13 +1,10 @@
 "use client";
 import Link from "next/link";
 import StaffCard from "@/components/StaffCard";
-import { redirect } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Loader from "@/components/Loader";
 
 export default function Staff() {
-  const session = useSession();
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -15,14 +12,6 @@ export default function Staff() {
       .then(response => response.json())
       .then(data => setData(data))
   }, [])
-
-  if (session.status === "loading") {
-    return null
-  } else if (session.status === "unauthenticated") {
-    redirect(`/login?callbackUrl=/staff`)
-  } else if (session.data.user.branch) {
-    redirect(`/${session.data.user.branch}`)
-  }
 
   if (data === undefined) {
     return <Loader />
