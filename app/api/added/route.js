@@ -18,9 +18,7 @@ export async function GET(request) {
 
   const data = await supabase
     .from("Receipts")
-    .select(
-      "receipt_number, branch, name, phone_number, expiry_date, created"
-    )
+    .select()
     .eq('branch', branch)
     .lt('created', date)
     .order('created', { ascending: false })

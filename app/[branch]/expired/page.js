@@ -17,7 +17,7 @@ export default function Expired({ params }) {
   } else if (data?.length === 0) {
     return (
       <main className="flex flex-col p-6 md:p-24">
-        <h2 className="m-auto w-60 text-center text-lg text-gray-700">No students&apos; membership expiring within the next week.</h2>
+        <h2 className="m-auto w-60 text-center text-lg text-gray-700">No students&apos; membership expired in the last week.</h2>
       </main>
     );
   } else {

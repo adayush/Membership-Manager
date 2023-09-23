@@ -3,7 +3,7 @@ import config from "@/config";
 
 export default function StudentCard({ student, showBranch }) {
   return (
-    <Link href={`/student/${student["receipt_number"]}`}>
+    <Link href={`/student/${student.key}`}>
       <div className="flex flex-col border rounded-md p-3 hover:bg-gray-100 [&>div]:my-1 [&>div]:flex [&>div]:justify-between [&>div]:items-end">
         <div>
           <p className="text-gray-800 font-medium">{student["name"]}</p>

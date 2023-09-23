@@ -132,7 +132,6 @@ export default function EditStaff({ params }) {
             value={formData.id}
             disabled
             required
-            // onChange={(e) => handleChange(e, "receipt_number")}
           />
           <span className="text-red-500">{errors["id"]}</span>
         </div>

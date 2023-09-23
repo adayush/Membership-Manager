@@ -15,17 +15,17 @@ export async function GET(request) {
 
   let data = null;
 
-  if (!parseInt(query)) {
+  if (parseInt(query)) {
     data = await supabase
       .from("Receipts")
-      .select("receipt_number, branch, name, phone_number, expiry_date")
-      .like("name", `%${query}%`)
+      .select()
+      .eq("receipt_number", parseInt(query))
       .limit(20)
   } else {
     data = await supabase
       .from("Receipts")
-      .select("receipt_number, branch, name, phone_number, expiry_date")
-      .eq("receipt_number", parseInt(query))
+      .select()
+      .like("name", `%${query}%`)
       .limit(20)
   }
 

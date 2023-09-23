@@ -19,9 +19,7 @@ export async function GET(request) {
 
   const data = await supabase
     .from("Receipts")
-    .select(
-      "receipt_number, branch, name, phone_number, expiry_date, created"
-    )
+    .select()
     .eq('branch', branch)
     .lt('expiry_date', today)
     .gte('expiry_date', week);

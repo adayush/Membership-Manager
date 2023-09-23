@@ -9,13 +9,13 @@ export default function Student({ params }) {
   const [data, setData] = useState();
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student?receipt=${params.receipt}`)
+    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student?key=${params.key}`)
       .then(response => response.json())
       .then(data => setData({
         ...data,
         branch: config.branch_list[data.branch]
       }))
-  }, [params.receipt])
+  }, [params.key])
 
 
   if (data === undefined) {
@@ -57,7 +57,7 @@ export default function Student({ params }) {
             <p className="text-gray-800 text-xl">{data["created"]}</p>
           </div>
         </div>
-        <Link href={`${process.env.NEXT_PUBLIC_PUBLIC_URL}/student/${data.receipt_number}/edit`}>
+        <Link href={`${process.env.NEXT_PUBLIC_PUBLIC_URL}/student/${data.key}/edit`}>
           <div className="absolute right-8 bottom-8 p-5 [clip-path:circle()] [shape-outside:circle()] bg-black text-white rounded-full">
             <Image src="/images/editsmall.png" width={24} height={24} alt="Edit button" />
           </div>

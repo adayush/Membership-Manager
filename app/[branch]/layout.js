@@ -12,7 +12,6 @@ export default function BranchLayout({ params, children }) {
     redirect(`/login?callbackUrl=/${params.branch}`)
   } else if (config.branch_list[session.data.user.branch] === undefined) {
     // redirect to error page. Invalid branch
-    console.error('Branch doesn\'t exist.');
   } else if (session.data.user.role === "manager" && params.branch !== session.data.user.branch) {
     redirect(`/${session.data.user.branch}`)
   }

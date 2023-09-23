@@ -10,17 +10,16 @@ export async function GET(request) {
   }
 
   const { searchParams } = new URL(request.url);
-  const receipt = searchParams.get("receipt");
+  const key = searchParams.get("key");
 
   const data = await supabase
     .from("Receipts")
     .select()
-    .eq("receipt_number", receipt);
+    .eq("key", key);
 
   if (data.error) {
     return NextResponse.json({}, { status: 404 });
   } else {
-    delete data.data[0]["Key"];
     return NextResponse.json(data.data[0]);
   }
 }

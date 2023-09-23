@@ -8,6 +8,7 @@ export default function EditStudent({ params }) {
   const [isLoading, setIsLoading] = useState(false);
   const [formStatus, setFormStatus] = useState();
   const [formData, setFormData] = useState({
+    key: null,
     receipt_number: null,
     branch: null,
     name: null,
@@ -15,6 +16,7 @@ export default function EditStudent({ params }) {
     expiry_date: null,
   });
   const [errors, setErrors] = useState({
+    key: null,
     receipt_number: null,
     branch: null,
     name: null,
@@ -23,13 +25,13 @@ export default function EditStudent({ params }) {
   })
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student?receipt=${params.receipt}`)
+    fetch(`${process.env.NEXT_PUBLIC_PUBLIC_URL}/api/student?key=${params.key}`)
       .then(response => response.json())
       .then((data) => {
         setFormData(data)
         setIsFormLoaded(true)
       })
-  }, [params.receipt])
+  }, [params.key])
 
   const validate = () => {
     const newErrors = {
@@ -109,13 +111,13 @@ export default function EditStudent({ params }) {
   if (!isFormLoaded) {
     return (
       <main className="p-6 sm:p-24">
-      <div className="flex flex-col gap-5 m-auto max-w-sm [&>div>label]:block [&>div>label]:text-gray-800 [&>div>label]:text-sm [&>div>label]:font-medium [&>div>label]:mb-1 [&>div>input]:p-2 [&>div>input]:border-[1px] [&>div>input]:border-gray-300 [&>div>input]:rounded-sm [&>div>input]:bg-gray-100 [&>div>input]:w-full">
-        <h1 className="text-xl sm:text-2xl font-medium mb-2 text-center">
-          Edit Student
-        </h1>
-        <FormStatus formStatus="Loading" />
-      </div>
-    </main>
+        <div className="flex flex-col gap-5 m-auto max-w-sm [&>div>label]:block [&>div>label]:text-gray-800 [&>div>label]:text-sm [&>div>label]:font-medium [&>div>label]:mb-1 [&>div>input]:p-2 [&>div>input]:border-[1px] [&>div>input]:border-gray-300 [&>div>input]:rounded-sm [&>div>input]:bg-gray-100 [&>div>input]:w-full">
+          <h1 className="text-xl sm:text-2xl font-medium mb-2 text-center">
+            Edit Student
+          </h1>
+          <FormStatus formStatus="Loading" />
+        </div>
+      </main>
     )
   }
 

@@ -25,10 +25,10 @@ export const authOptions = {
     async session({ session }) {
       const { data, error } = await supabase
         .from("users")
-        .select("name, role, branch")
+        .select("name, role, branch, is_active")
         .eq("email", session.user.email);
 
-      if (error || data.length === 0) {
+      if (error || data.length === 0 || data[0].is_active === false) {
         return false;
       }
       session.user.name = data[0].name;
