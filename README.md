@@ -7,6 +7,7 @@ If you have a membership-based business, this project can help you better manage
 - Search members by their name or receipt number
 - View members whose membership is going to expire in the next week, or has expired in the previous week. This can be useful for calls related to membership renewal
 - Easily add more branches (locations) of the business configure other metadata in the `config.js` file
+- PWA app for ease of use
 
 ## Screenshots
 
