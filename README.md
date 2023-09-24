@@ -1,11 +1,18 @@
 # Membership Manager
 
 If you have a membership-based business, this project can help you better manage your members. This app has the following features:
-- Owners can manage staff (view, add and update) and control their access to this app
-- Owners and staff can manage members (view, add and update)
-- They can also view members whose membership is going to expire in the next week, or has expired in the previous week. This can be useful for calls related to membership renewal
-- You can easily add more branches (locations) of your business configure other metadata in the `config.js` file
+- Role-based auth and pages
+- Owners can manage staff and control their access to the app
+- Owners and staff can manage members
+- Search members by their name or receipt number
+- View members whose membership is going to expire in the next week, or has expired in the previous week. This can be useful for calls related to membership renewal
+- Easily add more branches (locations) of the business configure other metadata in the `config.js` file
 
+## Screenshots
+
+![Demo 1](/screenshot-1.png)
+
+![Demo 2](/screenshot-2.png)
 
 ## Usage
 
