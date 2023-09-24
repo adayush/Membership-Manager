@@ -14,7 +14,7 @@ export default function Expiring({ params }) {
 
   if (data === undefined) {
     return <Loader />
-  } else if (data && data.length !== 0) {
+  } else if (data?.length === 0) {
     return (
       <main className="flex p-6 md:p-24">
         <h2 className="m-auto w-60 text-center text-lg text-gray-700">No students&apos; membership expiring within the next week.</h2>
