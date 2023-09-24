@@ -24,7 +24,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Tech stack
 
 This project is built using:
-1. Next.js
+1. Next.js 13
 2. Postgres DB by Supabase
 3. TailwindCSS
 
