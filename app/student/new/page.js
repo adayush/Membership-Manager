@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import config from "@/config";
 
 export default function NewStudent() {
@@ -67,8 +67,6 @@ export default function NewStudent() {
     return isValid;
   }
 
-  const router = useRouter();
-
   const handleChange = (event, property) => {
     setFormData({
       ...formData,
@@ -76,8 +74,9 @@ export default function NewStudent() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     if (!validate()) return;
+    e.currentTarget.disabled = true;
 
     setIsLoading(true);
 
@@ -90,13 +89,13 @@ export default function NewStudent() {
         if (res.status === 201) {
           // redirect to Home
           setFormStatus("Success");
-          setTimeout(() => router.push('/'), 1000);
+          setTimeout(() => router.push('/'), 500);
         } else {
           // failed to add student
           setFormData("Failed");
         }
       });
-     setIsLoading(false);
+    setIsLoading(false);
   };
 
   return (
@@ -170,7 +169,6 @@ export default function NewStudent() {
         <button
           className="w-full text-center text-white text-lg rounded bg-black p-3 mt-8 hover:bg-[#fbd331] hover:text-black hover:font-semibold"
           onClick={handleSubmit}
-          disabled={isLoading}
         >
           {isLoading? 'Please wait' : 'Submit'}
         </button>

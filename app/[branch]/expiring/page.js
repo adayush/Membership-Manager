@@ -31,7 +31,7 @@ export default function Expiring({ params }) {
           <p className="text-right text-gray-500">{data.length} students</p>
           <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {data?.map((student) => (
-              <StudentCard key={student.receipt_number} student={student} />
+              <StudentCard key={student.key} student={student} />
             ))}
           </div>
         </div>

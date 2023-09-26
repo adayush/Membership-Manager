@@ -67,8 +67,9 @@ export default function EditStaff() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     if (!validate()) return;
+    e.currentTarget.disabled = true;
 
     setIsLoading(true);
 
@@ -164,7 +165,6 @@ export default function EditStaff() {
         <button
           className="w-full text-center text-white text-lg rounded bg-black p-3 mt-8 hover:bg-[#fbd331] hover:text-black hover:font-semibold"
           onClick={handleSubmit}
-          disabled={isLoading}
         >
           {isLoading ? 'Please wait' : 'Submit'}
         </button>

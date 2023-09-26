@@ -29,7 +29,7 @@ export default function Added({ params }) {
         <div className="max-w-2xl m-auto">
           <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {data?.map((student) => (
-              <StudentCard key={student.receipt_number} student={student} />
+              <StudentCard key={student.key} student={student} />
             ))}
           </div>
         </div>
